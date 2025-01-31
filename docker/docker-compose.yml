@@ -1,0 +1,39 @@
+volumes:
+  elasticsearch:
+
+services:
+
+  elasticsearch:
+    image: elasticsearch:8.17.1
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - search.max_buckets=900000
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    healthcheck:
+      test: curl -s http://elasticsearch:9200/_cat/health >/dev/null || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 30
+
+  pulse:
+    build:
+      dockerfile: docker/Dockerfile
+      context: ..
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    ports:
+      - 8000:8000
+    volumes:
+      - ${PWD}/app:/app/

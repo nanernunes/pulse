@@ -1,11 +1,11 @@
-FROM python:3.12-alpine
+FROM        python:3.12-alpine
 
-WORKDIR /app
+WORKDIR     /app
 
-COPY app/requirements.txt .
+ADD         app/requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN         pip3 install --no-cache-dir -r requirements.txt
 
-COPY app/ .
+ADD         app/ .
 
-CMD python manage.py runserver 0.0.0.0:8000
+CMD         ["python", "manage.py", "runserver", "0.0.0.0:8000"]

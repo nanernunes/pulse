@@ -3,463 +3,341 @@
 
 {% block content %}
 
-<div class="tab-content rounded-bottom">
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="refresh_interval">Refresh Interval</label>
-                <select class="form-select" id="refresh_interval">
-                    <option value="5000">5s</option>
-                    <option value="10000">10s</option>
-                    <option selected="" value="15000">15s</option>
-                    <option value="30000">30s</option>
-                    <option value="60000">60s</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row g-3 mb-3">
-        <div class="col-sm-6 col-xl-4">
-            <div class='card text-white bg-success widget' id="widget_status">
-                <div class="card-body">
-                    <div class="text-white text-opacity-75 text-end">
-                        <i class="fas fa-heartbeat fa-lg"></i>
-                    </div>
-                    <div class="spinner-overlay">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" id="spinner" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fs-4 fw-semibold widget_data" id="status"></div>
-                    <div>Cluster Status</div>
-                    <div class="progress progress-white progress-thin my-2">
-                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <small class="text-white text-opacity-75 d-inline-block text-truncate"
-                            id="cluster_name"></small>
-                        <small class="text-white text-opacity-75 ms-auto" id="version"></small>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.col-->
-        <div class="col-sm-6 col-xl-4">
-            <div class="card widget">
-                <div class="card-body">
-                    <div class="text-body-secondary text-end">
-                        <i class="fas fa-server fa-lg"> </i>
-                    </div>
-                    <div class="fs-4 fw-semibold widget_data" id="nodes_count_total"></div>
-                    <div class="spinner-overlay">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" id="spinner" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>Nodes</div>
-                    <div class="progress progress-thin my-2">
-                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 100%" aria-valuenow="25"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <small class="text-body-secondary" id="nodes_count_master"></small>
-                        <small class="text-body-secondary ms-auto" id="nodes_count_data"></small>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.col-->
-        <div class="col-sm-6 col-xl-4">
-            <div class="card widget">
-                <div class="card-body">
-                    <div class="text-body-secondary text-end">
-                        <i class="fas fa-cubes fa-lg"></i>
-                    </div>
-                    <div class="fs-4 fw-semibold widget_data" id="active_shards"></div>
-                    <div class="spinner-overlay">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" id="spinner" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>Shards</div>
-                    <div class="progress progress-thin my-2">
-                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 100%" aria-valuenow="25"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <small class="text-body-secondary" id="active_primary_shards"></small>
-                        <small class="text-body-secondary ms-auto" id="active_replica_shards"></small>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.col-->
-        <div class="col-sm-6 col-xl-4">
-            <div class="card widget">
-                <div class="card-body">
-                    <div class="text-body-secondary text-end">
-                        <i class="fas fa-database fa-lg"> </i>
-                    </div>
-                    <div class="fs-4 fw-semibold widget_data" id="indices_count"></div>
-                    <div class="spinner-overlay">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" id="spinner" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>Indices</div>
-                    <div class="progress progress-thin my-2">
-                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 100%"
-                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <small class="text-body-secondary" id="docs_count"></small>
-                </div>
-            </div>
-        </div>
-        <!-- /.col-->
-        <div class="col-sm-6 col-xl-4">
-            <div class="card widget">
-                <div class="card-body">
-                    <div class="text-body-secondary text-end">
-                        <i class="fas fa-database fa-lg"> </i>
-                    </div>
-                    <div class="fs-4 fw-semibold widget_data" id="storage_size_in_bytes"></div>
-                    <div class="spinner-overlay">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" id="spinner" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>Storage</div>
-                    <div class="progress progress-thin my-2">
-                        <div class="progress-bar bg-success" id="widget_storage_usage_progressbar" role="progressbar"
-                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <small class="text-body-secondary" id="widget_storage_usage"></small>
-                </div>
-            </div>
-        </div>
-        <!-- /.col-->
-        <div class="col-sm-6 col-xl-4">
-            <div class="card widget">
-                <div class="card-body">
-                    <div class="text-body-secondary text-end">
-                        <i class="fas fa-memory fa-lg"> </i>
-                    </div>
-                    <div class="fs-4 fw-semibold widget_data" id="heap_size_in_bytes"></div>
-                    <div class="spinner-overlay">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" id="spinner" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>Heap</div>
-                    <div class="progress progress-thin my-2">
-                        <div class="progress-bar bg-success" id="widget_heap_usage_progressbar" role="progressbar"
-                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <small class="text-body-secondary" id="widget_heap_usage"></small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row row-cols-2">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header"><strong>Cluster</strong><span class="small ms-1">Info</span></div>
-                <div class="card-body">
-                    <div class="spinner-overlay">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" id="spinner" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">UUID</div>
-                        <div class="p-2 ms-auto" id="cluster_info_uuid"></div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Cluster Name</div>
-                        <div class="p-2 ms-auto" id="cluster_info_name"></div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Version</div>
-                        <div class="p-2 ms-auto" id="cluster_info_version"></div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Nodes</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge bg-info ms-auto" id="cluster_info_nodes"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Memory Usage</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge bg-success ms-auto" id="cluster_info_memory_usage"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Heap Usage</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge bg-success ms-auto" id="cluster_info_heap_usage"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Storage Usage</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge bg-success ms-auto" id="cluster_info_storage_usage"></span>
-                        </div>
-                    </div>
+{% verbatim %}
+<script type="text/babel">
+    const MILLISECONDS = 1000
+    const formatBytes = (number) => number && filesize.filesize(number)
+</script>
+{% endverbatim %}
 
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header"><strong>Cluster</strong><span class="small ms-1">Health</span></div>
-                <div class="card-body">
-                    <div class="spinner-overlay">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" id="spinner" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Status</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge bg-success ms-auto" id="cluster_health_status"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Relocating Shards</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge badge-sm bg-success ms-auto"
-                                id="cluster_health_relocating_shards"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Initializing Shards</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge badge-sm bg-success ms-auto"
-                                id="cluster_health_initializing_shards"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Unassign Shards</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge badge-sm bg-success ms-auto"
-                                id="cluster_health_unassigned_shards"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Active Shards</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge badge-sm bg-info ms-auto" id="cluster_health_active_shards"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Active Shards Percent</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge badge-sm bg-success ms-auto"
-                                id="cluster_health_active_shards_percent"></span>
-                        </div>
-                    </div>
-                    <div class="hstack gap-2">
-                        <div class="p-2">Pending Tasks</div>
-                        <div class="p-2 ms-auto">
-                            <span class="badge badge-sm bg-success ms-auto"
-                                id="cluster_health_number_of_pending_tasks"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    let currentInterval = null;
-    function updateClusterHealth() {
-        const spinners = document.querySelectorAll('.spinner-overlay');
-        spinners.forEach(spinner => spinner.style.display = '');
-
-        fetch('/api/dashboard')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('error').innerText = data.error;
-                    return;
-                }
-
-                let status = data.cluster_health.status;
-                let cluster_name = data.cluster_health.cluster_name
-                let version = data.cluster_stats.indices.versions[0].version
-                let nodes_count_total = data.cluster_stats.nodes.count.total
-                let nodes_count_master = data.cluster_stats.nodes.count.master
-                let nodes_count_data = data.cluster_stats.nodes.count.data
-                let storage_size_in_bytes = data.cluster_stats.indices.store.size_in_bytes
-                let heap_size_in_bytes = data.cluster_stats.nodes.jvm.mem.heap_max_in_bytes
-                let active_shards = data.cluster_health.active_shards
-                let active_primary_shards = data.cluster_health.active_primary_shards
-                let active_replica_shards = data.cluster_health.active_replica_shards
-                let indices_count = data.cluster_stats.indices.count
-                let docs_count = data.cluster_stats.indices.docs.count
-                let relocating_shards = data.cluster_health.relocating_shards
-                let initializing_shards = data.cluster_health.initializing_shards
-                let unassigned_shards = data.cluster_health.initializing_shards
-                let active_shards_percent = data.cluster_health.active_shards_percent_as_number
-                let number_of_pending_tasks = data.cluster_health.number_of_pending_tasks
-                let cluster_info_uuid = data.cluster_stats.cluster_uuid
-                let cluster_info_memory_usage = data.cluster_stats.nodes.os.mem.used_percent
-                let cluster_info_heap_usage = data.cluster_stats.heap_usage_percent
-                let cluster_info_storage_usage = data.cluster_stats.disk_usage_percent
-                let widget_storage_usage = data.cluster_stats.disk_usage_percent
-
-                document.getElementById('status').innerText = status;
-                document.getElementById('cluster_health_status').innerText = status;
-                if (status == "green") {
-                    document.getElementById('widget_status').className = "card text-white bg-success widget";
-                    document.getElementById('cluster_health_status').className = 'badge bg-success ms-auto';
-                } else if (status == "yellow") {
-                    document.getElementById('widget_status').className = "card text-white bg-warning widget";
-                    document.getElementById('cluster_health_status').className = 'badge bg-warning ms-auto';
-                } else {
-                    document.getElementById('widget_status').className = "card text-white bg-danger widget";
-                    document.getElementById('cluster_health_status').className = 'badge bg-danger ms-auto';
-                }
-
-                document.getElementById('cluster_name').innerText = cluster_name;
-                document.getElementById('cluster_info_name').innerText = cluster_name;
-                document.getElementById('version').innerText = version;
-                document.getElementById('cluster_info_version').innerText = version;
-                document.getElementById('nodes_count_total').innerText = nodes_count_total;
-                document.getElementById('cluster_info_nodes').innerText = nodes_count_total;
-                document.getElementById('nodes_count_master').innerText = `${nodes_count_master} Master`;
-                document.getElementById('nodes_count_data').innerText = `${nodes_count_data} Data`;
-                document.getElementById('active_shards').innerText = active_shards;
-                document.getElementById('active_primary_shards').innerText = `${active_primary_shards} Primary`;
-                document.getElementById('active_replica_shards').innerText = `${active_replica_shards} Replica`;
-                document.getElementById('indices_count').innerText = indices_count;
-                document.getElementById('docs_count').innerText = `${docs_count} Docs`;
-
-                document.getElementById('cluster_health_relocating_shards').innerText = relocating_shards;
-                if (relocating_shards > 0) {
-                    document.getElementById('cluster_health_relocating_shards').className = 'badge badge-sm bg-warning ms-auto';
-                }
-
-                document.getElementById('cluster_health_initializing_shards').innerText = initializing_shards;
-                if (relocating_shards > 0) {
-                    document.getElementById('cluster_health_initializing_shards').className = 'badge badge-sm bg-warning ms-auto';
-                }
-
-                document.getElementById('cluster_health_unassigned_shards').innerText = initializing_shards;
-                if (relocating_shards > 0) {
-                    document.getElementById('cluster_health_unassigned_shards').className = 'badge badge-sm bg-warning ms-auto';
-                }
-
-                document.getElementById('cluster_health_active_shards').innerText = active_shards;
-
-                document.getElementById('cluster_health_active_shards_percent').innerText = `${Math.round(active_shards_percent)}%`;
-                if (active_shards_percent < 100) {
-                    document.getElementById('cluster_health_active_shards_percent').className = 'badge badge-sm bg-danger ms-auto';
-                }
-
-                document.getElementById('cluster_health_number_of_pending_tasks').innerText = number_of_pending_tasks;
-                if (number_of_pending_tasks > 0) {
-                    document.getElementById('cluster_health_number_of_pending_tasks').className = 'badge badge-sm bg-danger ms-auto';
-                }
-
-                document.getElementById('cluster_info_uuid').innerText = cluster_info_uuid
-
-                document.getElementById('cluster_info_memory_usage').innerText = `${cluster_info_memory_usage}%`;
-                if (cluster_info_memory_usage > 89) {
-                    document.getElementById('cluster_info_memory_usage').className = 'badge badge-sm bg-danger ms-auto';
-                }
-
-                document.getElementById('cluster_info_heap_usage').innerText = `${Math.round(cluster_info_heap_usage)}%`;
-                if (cluster_info_heap_usage > 89) {
-                    document.getElementById('cluster_info_heap_usage').className = 'badge badge-sm bg-danger ms-auto';
-                }
-
-                document.getElementById('cluster_info_storage_usage').innerText = `${Math.round(cluster_info_storage_usage)}%`;
-                if (cluster_info_storage_usage > 89) {
-                    document.getElementById('cluster_info_storage_usage').className = 'badge badge-sm bg-danger ms-auto';
-                }
-
-                document.getElementById('storage_size_in_bytes').innerText = `${formatBytes(storage_size_in_bytes)}`;
-                document.getElementById('widget_storage_usage').innerText = `${Math.round(cluster_info_storage_usage)}% consumed`;
-                document.getElementById('widget_storage_usage_progressbar').style.width = `${Math.round(cluster_info_storage_usage)}%`;
-                if (cluster_info_storage_usage > 89) {
-                    document.getElementById('widget_storage_usage').className = 'progress-bar bg-success';
-                }
-
-                document.getElementById('heap_size_in_bytes').innerText = `${formatBytes(heap_size_in_bytes)}`;
-                document.getElementById('widget_heap_usage').innerText = `${Math.round(cluster_info_heap_usage)}% in use`;
-                document.getElementById('widget_heap_usage_progressbar').style.width = `${cluster_info_heap_usage}%`;
-                if (cluster_info_heap_usage > 89) {
-                    document.getElementById('widget_heap_usage').className = 'progress-bar bg-success';
-                }
+<div id="dashboard"></div>
 
 
-            })
-            .catch(error => {
-                console.error('Erro ao buscar os dados:', error);
-            })
-            .finally(() => {
-                spinners.forEach(spinner => spinner.style.display = 'none');
-            });
-    }
+{% verbatim %}
+<script type="text/babel" data-plugins="transform-optional-chaining">
 
-    let interval = document.getElementById('refresh_interval').value;
+    const Dashboard = () => {
 
-    function updateInterval() {
-        const intervalValue = document.getElementById('refresh_interval').value;
+        let timer = React.useRef(null)
 
-        if (currentInterval) {
-            clearInterval(currentInterval);
+        const [data, setData] = React.useState()
+        const [refreshTime, setRefreshTime] = React.useState(15)
+
+        const getClusterData = () =>
+            fetch("/api/dashboard")
+                .then((response) => response.json())
+                .then((data) => setData(data))
+
+
+        const crontab = () => {
+            getClusterData()
+
+            if (timer.current) clearTimeout(timer.current)
+            timer.current = setTimeout(() => crontab(), refreshTime * MILLISECONDS)
         }
 
-        currentInterval = setInterval(updateClusterHealth, intervalValue);
+        React.useEffect(() => {
+            crontab()
+            return () => clearTimeout(timer)
+        }, [refreshTime])
+
+        return (
+            <div>
+                {data === null
+                    ? (
+                        <div>Loading...</div>
+                    )
+                    : (
+                        <div>
+                            <div className="tab-content rounded-bottom">
+                                <div className="row">
+                                    <div className="col"></div>
+                                    <div className="col-3">
+                                        <div className="input-group mb-3">
+                                            <label className="input-group-text" htmlFor="refresh_interval">Refresh Interval</label>
+                                            <select className="form-select" id="refresh_interval" value={refreshTime} onChange={({target}) => setRefreshTime(target.value)}>
+                                                <option value={5}>5s</option>
+                                                <option value={10}>10s</option>
+                                                <option value={15}>15s</option>
+                                                <option value={30}>30s</option>
+                                                <option value={60}>60s</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row g-3 mb-3">
+                                    <div className="col-sm-6 col-xl-4">
+                                        <div className='card text-white bg-success widget' id="widget_status">
+                                            <div className="card-body">
+                                                <div className="text-white text-end">
+                                                    <i className="fas fa-heartbeat fa-lg"></i>
+                                                </div>
+                                                <div className="fs-4 fw-semibold widget_data" id="status">{data?.cluster_stats.status}</div>
+                                                <div>Cluster Status</div>
+                                                <div className="progress progress-white progress-thin my-2">
+                                                    <div className="progress-bar" role="progressbar" style={{width: "100%"}} aria-valuenow="25"
+                                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <small className="text-white d-inline-block text-truncate" id="cluster_name">{data?.cluster_health.cluster_name}</small>
+                                                    <small className="text-white ms-auto" id="version">{data?.cluster_stats.indices.versions?.[0]?.version}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-6 col-xl-4">
+                                        <div className="card widget">
+                                            <div className="card-body">
+                                                <div className="text-body-secondary text-end">
+                                                    <i className="fas fa-server fa-lg"> </i>
+                                                </div>
+                                                <div className="fs-4 fw-semibold widget_data" id="nodes_count_total">
+                                                    {data?.cluster_stats.nodes.count.total}
+                                                </div>
+                                                <div>Nodes</div>
+                                                <div className="progress progress-thin my-2">
+                                                    <div className="progress-bar bg-secondary" role="progressbar" style={{width: "100%"}} aria-valuenow="25"
+                                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <small className="text-body-secondary" id="nodes_count_master">
+                                                        {data?.cluster_stats.nodes.count.master}
+                                                    </small>
+                                                    <small className="text-body-secondary ms-auto" id="nodes_count_data">
+                                                        {data?.cluster_stats.nodes.count.data} Data
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-6 col-xl-4">
+                                        <div className="card widget">
+                                            <div className="card-body">
+                                                <div className="text-body-secondary text-end">
+                                                    <i className="fas fa-cubes fa-lg"></i>
+                                                </div>
+                                                <div className="fs-4 fw-semibold widget_data" id="active_shards">
+                                                    {data?.cluster_health.active_shards}
+                                                </div>
+                                                <div>Shards</div>
+                                                <div className="progress progress-thin my-2">
+                                                    <div className="progress-bar bg-secondary" role="progressbar" style={{width: "100%"}} aria-valuenow="25"
+                                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <small className="text-body-secondary" id="active_primary_shards">
+                                                        {data?.cluster_health.active_primary_shards} Primary
+                                                    </small>
+                                                    <small className="text-body-secondary ms-auto" id="active_replica_shards">
+                                                        {data?.cluster_health.active_replica_shards} Replica
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-6 col-xl-4">
+                                        <div className="card widget">
+                                            <div className="card-body">
+                                                <div className="text-body-secondary text-end">
+                                                    <i className="fas fa-database fa-lg"> </i>
+                                                </div>
+                                                <div className="fs-4 fw-semibold widget_data" id="indices_count">
+                                                    {data?.cluster_stats.indices.count}
+                                                </div>
+                                                <div>Indices</div>
+                                                <div className="progress progress-thin my-2">
+                                                    <div className="progress-bar bg-secondary" role="progressbar" style={{width: "100%"}}
+                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small className="text-body-secondary" id="docs_count">
+                                                    {data?.cluster_stats.indices.docs.count} Docs
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-6 col-xl-4">
+                                        <div className="card widget">
+                                            <div className="card-body">
+                                                <div className="text-body-secondary text-end">
+                                                    <i className="fas fa-database fa-lg"> </i>
+                                                </div>
+                                                <div className="fs-4 fw-semibold widget_data" id="storage_size_in_bytes">
+                                                    {formatBytes(data?.cluster_stats.indices.store.size_in_bytes)}
+                                                </div>
+                                                <div>Storage</div>
+                                                <div className="progress progress-thin my-2">
+                                                    <div className="progress-bar bg-success" id="widget_storage_usage_progressbar" role="progressbar"
+                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small className="text-body-secondary" id="widget_storage_usage">
+                                                    {Math.round(data?.cluster_stats.disk_usage_percent)} consumed
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-6 col-xl-4">
+                                        <div className="card widget">
+                                            <div className="card-body">
+                                                <div className="text-body-secondary text-end">
+                                                    <i className="fas fa-memory fa-lg"> </i>
+                                                </div>
+                                                <div className="fs-4 fw-semibold widget_data" id="heap_size_in_bytes">
+                                                    {formatBytes(data?.cluster_stats.nodes.jvm.mem.heap_max_in_bytes)}
+                                                </div>
+                                                <div>Heap</div>
+                                                <div className="progress progress-thin my-2">
+                                                    <div className="progress-bar bg-success" id="widget_heap_usage_progressbar" role="progressbar"
+                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small className="text-body-secondary" id="widget_heap_usage"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row row-cols-2">
+                                    <div className="col">
+                                        <div className="card mb-4">
+                                            <div className="card-header"><strong>Cluster</strong><span className="small ms-1">Info</span></div>
+                                            <div className="card-body">
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">UUID</div>
+                                                    <div className="p-2 ms-auto" id="cluster_info_uuid">
+                                                        {data?.cluster_stats.cluster_uuid}
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Cluster Name</div>
+                                                    <div className="p-2 ms-auto" id="cluster_info_name">
+                                                        {data?.cluster_health.cluster_name}
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Version</div>
+                                                    <div className="p-2 ms-auto" id="cluster_info_version">
+                                                        {data?.cluster_stats.indices.versions?.[0]?.version}
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Nodes</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge bg-info ms-auto" id="cluster_info_nodes">
+                                                            {data?.cluster_stats.nodes.count.total}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Memory Usage</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className={`badge bg-${data?.cluster_stats.nodes.os.mem.used_percent >= 90 ? "danger" : "success"} ms-auto`}>
+                                                            {data?.cluster_stats.nodes.os.mem.used_percent}%
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Heap Usage</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge bg-success ms-auto" id="cluster_info_heap_usage">
+                                                            {data?.cluster_stats.heap_usage_percent.toFixed(2)}%
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Storage Usage</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge bg-success ms-auto" id="cluster_info_storage_usage">
+                                                            {Math.round(data?.cluster_stats.disk_usage_percent)}%
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="card mb-4">
+                                            <div className="card-header"><strong>Cluster</strong><span className="small ms-1">Health</span></div>
+                                            <div className="card-body">
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Status</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge bg-success ms-auto" id="cluster_health_status">
+                                                            {data?.cluster_stats.status}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Relocating Shards</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge badge-sm bg-success ms-auto"
+                                                            id="cluster_health_relocating_shards">
+                                                            {data?.cluster_health.relocating_shards}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Initializing Shards</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge badge-sm bg-success ms-auto"
+                                                            id="cluster_health_initializing_shards">
+                                                            {data?.cluster_health.initializing_shards}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Unassign Shards</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge badge-sm bg-success ms-auto"
+                                                            id="cluster_health_unassigned_shards">
+                                                            {data?.cluster_health.initializing_shards}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Active Shards</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge badge-sm bg-info ms-auto" id="cluster_health_active_shards">
+                                                            {data?.cluster_health.active_shards}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Active Shards Percent</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge badge-sm bg-success ms-auto"
+                                                            id="cluster_health_active_shards_percent">
+                                                            {Math.round(data?.cluster_health.active_shards_percent_as_number)}%
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="hstack gap-2">
+                                                    <div className="p-2">Pending Tasks</div>
+                                                    <div className="p-2 ms-auto">
+                                                        <span className="badge badge-sm bg-success ms-auto"
+                                                            id="cluster_health_number_of_pending_tasks">
+                                                            {data?.cluster_health.number_of_pending_tasks}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    )
+                }
+            </div>
+        )
     }
 
-    const refreshIntervalElement = document.getElementById('refresh_interval');
-
-    if (refreshIntervalElement) {
-        refreshIntervalElement.addEventListener('change', updateInterval);
-        window.addEventListener('load', updateInterval);
-    }
-
-    updateClusterHealth();
-
-    function formatBytes(bytes, decimals = 2) {
-        if (bytes === 0) return '0 Bytes';
-
-        const k = 1024;
-        const dm = decimals < 0 ? 0 : decimals;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-    }
-
+    ReactDOM.createRoot(document.getElementById("dashboard")).render(<Dashboard />)
 </script>
+{% endverbatim %}
+
 {% endblock %}
