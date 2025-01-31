@@ -1,0 +1,21 @@
+{% load static %}
+
+{% for message in messages %}
+
+{% if message.tags == "error" %}
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="fw-semibold"><i class="fas fa-exclamation-triangle"></i> {{ message.tags }}</div> {{ message }}
+    <button class="btn-close" type="button" data-coreui-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% else %}
+
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <div class="fw-semibold"><i class="fas fa-info-circle"></i> {{ message.tags }}</div> {{ message }}
+    <button class="btn-close" type="button" data-coreui-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endif %}
+
+{% endfor %}
